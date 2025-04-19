@@ -15,6 +15,7 @@ class Actor extends Object {
   private rotation = 0;
   private entity?: Entity;
   private hasCollision = false;
+  private collisionOffset: Vector2d;
 
   public worldRef: World;
 
@@ -26,7 +27,8 @@ class Actor extends Object {
     speed = 0,
     velocity: Vector2d = { x: 0, y: 0 },
     destructionOffset: Vector2d = { x: 0, y: 0 },
-    offset: Vector2d = { x: 0, y: 0 }
+    offset: Vector2d = { x: 0, y: 0 },
+    collisionOffset: Vector2d = { x: 0, y: 0 }
   ) {
     super();
     if (src) {
@@ -50,6 +52,7 @@ class Actor extends Object {
     this.offset = offset;
     this.destructionOffset = destructionOffset;
     this.hasCollision = hasCollision;
+    this.collisionOffset = collisionOffset;
   }
 
   setTexture(image?: HTMLImageElement) {
@@ -132,13 +135,15 @@ class Actor extends Object {
     };
   }
 
+  setPosition(position: Vector2d) {
+    this.position = position;
+  }
+
   getPosition() {
     return this.position;
   }
 
-  onCollide = (entityA: Entity, entityB: Entity) => {
-    console.log("Colided with", entityA, entityB);
-  };
+  onCollide = (_entityA: Entity, _entityB: Entity) => {};
 
   unregisterEntity() {
     if (this.entity) {
@@ -147,8 +152,17 @@ class Actor extends Object {
   }
 
   private registerEntity(position: Vector2d, size: Vector2d) {
-    console.log(this);
-    this.entity = new Entity(position, size, this);
+    const newPosition = {
+      x: position.x - this.collisionOffset.x,
+      y: position.y - this.collisionOffset.y,
+    };
+
+    const newSize = {
+      x: size.x - this.collisionOffset.x,
+      y: size.y - this.collisionOffset.y,
+    };
+
+    this.entity = new Entity(newPosition, newSize, this);
     CollisionManager.registerEntity(this.entity);
   }
 
