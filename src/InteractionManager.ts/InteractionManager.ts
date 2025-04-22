@@ -10,6 +10,9 @@ class InteractionManager {
 
   private pressEAsset?: HTMLImageElement;
 
+  private animationOffset = 0;
+  private animationSpeed = 0.05;
+
   private constructor() {
     AssetManager.getImage("/pressE.png").then((image) => {
       this.pressEAsset = image;
@@ -102,17 +105,25 @@ class InteractionManager {
   }
 
   public render(canvas2D: CanvasRenderingContext2D) {
-    if (this.currentInteractiveEntity && this.pressEAsset) {
-      const entityPosition = this.currentInteractiveEntity.getPosition();
-      const entitySize = this.currentInteractiveEntity.getSize();
+    if (
+      this.currentInteractiveEntity &&
+      this.pressEAsset &&
+      this.playerEntity
+    ) {
+      const entityPosition = this.playerEntity.getPosition();
+      const entitySize = this.playerEntity.getSize();
 
       const centerX = entityPosition.x + entitySize.x / 2;
-      const centerY = entityPosition.y + entitySize.y / 2;
+      const centerY = entityPosition.y;
+
+      this.animationOffset =
+        (this.animationOffset + this.animationSpeed) % (2 * Math.PI);
+      const bounceOffset = Math.sin(this.animationOffset) * 5;
 
       const imageWidth = this.pressEAsset.width;
       const imageHeight = this.pressEAsset.height;
       const imageX = centerX - imageWidth / 2;
-      const imageY = centerY - imageHeight / 2;
+      const imageY = centerY - imageHeight + bounceOffset;
 
       canvas2D.drawImage(
         this.pressEAsset,
