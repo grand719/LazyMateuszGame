@@ -34,6 +34,7 @@ import RightTopWall from "../mapAssets/walls/RightTopWall";
 import Floor from "../mapAssets/Floor";
 import Plant from "../mapAssets/Plant";
 import Player from "../player/Player";
+import InteractionManager from "../../InteractionManager.ts/InteractionManager";
 
 const floor = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -67,9 +68,43 @@ const top = [
   [4, 4, 4, 4, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_"],
   [3, 3, 3, 3, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_", 18, 19],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
-  ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", 16, 17],
+  [
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    16,
+    17,
+  ],
   [6, 6, 6, 10, "_", "_", "_", "_", "_", 13, "_", "_", "_", 8, 6, 6],
-  ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", 13],
+  [
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    "_",
+    13,
+  ],
   [12, "_", 11, 5, "_", "_", "_", "_", 20, 21, 2, "_", "_", 5],
 ];
 
@@ -181,7 +216,13 @@ class MainApplication extends Application {
 
   tickInternal(deltaTime: number): void {
     CollisionManager.tick(deltaTime);
+    InteractionManager.tick(deltaTime);
     super.tickInternal(deltaTime);
+  }
+
+  renderInternal(canvas2D: CanvasRenderingContext2D): void {
+    super.renderInternal(canvas2D);
+    InteractionManager.render(canvas2D);
   }
 
   render(canvas2D: CanvasRenderingContext2D): void {

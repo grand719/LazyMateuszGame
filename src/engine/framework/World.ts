@@ -1,3 +1,4 @@
+import InteractionManager from "../../InteractionManager.ts/InteractionManager";
 import type Actor from "./Actor";
 import type Application from "./Application";
 import { WorldMap } from "./WorldMap";

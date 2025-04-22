@@ -21,15 +21,16 @@ class Player extends Actor {
   };
 
   constructor(owningWorld: World, startingPosition: Vector2d) {
-    super(
-      "",
+    super({
+      src: "",
       owningWorld,
       startingPosition,
-      true,
-      100,
-      { x: 0, y: 0 },
-      { x: 300, y: 300 }
-    );
+      hasCollision: true,
+      hasPlayerInteraction: true,
+      speed: 100,
+      velocity: { x: 0, y: 0 },
+      destructionOffset: { x: 300, y: 300 },
+    });
     AssetManager.getMultipleImages(Object.values(PlayerImages)).then(
       (images) => {
         this.playerImages = images;
@@ -173,7 +174,6 @@ class Player extends Actor {
 
     if (!isColliding) {
       this.collidedObjectRects = undefined;
-      console.log("Collision ended");
     }
 
     return isColliding;
