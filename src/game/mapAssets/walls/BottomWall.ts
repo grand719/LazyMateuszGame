@@ -2,10 +2,10 @@ import Actor from "../../../engine/framework/Actor";
 import { Vector2d } from "../../../engine/framework/types";
 import World from "../../../engine/framework/World";
 
-export default class VerticalWall extends Actor {
+export default class BottomWall extends Actor {
   constructor(owningWorld: World, startingPosition: Vector2d) {
     super(
-      "/walls/vertical_wall.png",
+      "/walls/bottom_wall.png",
       owningWorld,
       startingPosition,
       true,
