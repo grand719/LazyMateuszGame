@@ -4,15 +4,13 @@ import World from "../../engine/framework/World";
 
 export default class Toilet extends Actor {
   constructor(owningWorld: World, startingPosition: Vector2d) {
-    super(
-      "/toilette/toilet.png",
+    super({
+      src: "/toilette/toilet.png",
       owningWorld,
       startingPosition,
-      true,
-      0,
-      { x: 0, y: 0 },
-      { x: 300, y: 300 },
-      { x: 0, y: 0 }
-    );
+      hasCollision: true,
+      hasInteraction: true,
+      destructionOffset: { x: 300, y: 300 },
+    });
   }
 }

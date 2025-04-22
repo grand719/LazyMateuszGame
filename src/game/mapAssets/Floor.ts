@@ -4,14 +4,11 @@ import World from "../../engine/framework/World";
 
 export default class Floor extends Actor {
   constructor(owningWorld: World, startingPoint: Vector2d) {
-    super(
-      "/decorations/floor.png",
+    super({
+      src: "/decorations/floor.png",
       owningWorld,
-      startingPoint,
-      false,
-      0,
-      { x: 0, y: 0 },
-      { x: 300, y: 300 }
-    );
+      startingPosition: startingPoint,
+      destructionOffset: { x: 300, y: 300 },
+    });
   }
 }

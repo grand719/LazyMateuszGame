@@ -4,15 +4,12 @@ import World from "../../engine/framework/World";
 
 export default class DeskFront extends Actor {
   constructor(owningWorld: World, startingPosition: Vector2d) {
-    super(
-      "/desks/Computer1.png",
+    super({
+      src: "/desks/Computer1.png",
       owningWorld,
       startingPosition,
-      true,
-      0,
-      { x: 0, y: 0 },
-      { x: 300, y: 300 },
-      { x: 0, y: 0 }
-    );
+      hasCollision: true,
+      destructionOffset: { x: 300, y: 300 },
+    });
   }
 }
