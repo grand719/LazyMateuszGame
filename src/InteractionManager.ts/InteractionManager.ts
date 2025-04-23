@@ -110,34 +110,40 @@ class InteractionManager {
   }
 
   public render(canvas2D: CanvasRenderingContext2D) {
-    if (
-      this.currentInteractiveEntity &&
-      this.pressEAsset &&
-      this.playerEntity
-    ) {
-      const entityPosition = this.playerEntity.getPosition();
-      const entitySize = this.playerEntity.getSize();
+    if (!this.pressEAsset || !this.playerEntity) return;
+    this.animationOffset =
+      (this.animationOffset + this.animationSpeed) % (2 * Math.PI);
+
+    this.entitiesToInteract.forEach((entity) => {
+      const entityPosition = entity.getPosition();
+      const entitySize = entity.getSize();
 
       const centerX = entityPosition.x + entitySize.x / 2;
       const centerY = entityPosition.y;
 
-      this.animationOffset =
-        (this.animationOffset + this.animationSpeed) % (2 * Math.PI);
       const bounceOffset = Math.sin(this.animationOffset) * 5;
 
-      const imageWidth = this.pressEAsset.width;
-      const imageHeight = this.pressEAsset.height;
+      const imageWidth = this.pressEAsset!.width;
+      const imageHeight = this.pressEAsset!.height;
       const imageX = centerX - imageWidth / 2;
       const imageY = centerY - imageHeight + bounceOffset;
 
+      if (entity === this.currentInteractiveEntity) {
+        canvas2D.globalAlpha = 1.0;
+      } else {
+        canvas2D.globalAlpha = 0.3;
+      }
+
       canvas2D.drawImage(
-        this.pressEAsset,
+        this.pressEAsset!,
         imageX,
         imageY,
         imageWidth,
         imageHeight
       );
-    }
+    });
+
+    canvas2D.globalAlpha = 1.0;
   }
 
   public static getInstance() {

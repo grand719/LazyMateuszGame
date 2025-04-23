@@ -9,6 +9,7 @@ export default class Plant extends Actor {
       owningWorld,
       startingPosition,
       hasCollision: true,
+      hasInteraction: true,
       destructionOffset: { x: 300, y: 300 },
     });
   }
