@@ -21,11 +21,16 @@ import FrontWideTVRight from "../mapAssets/tvs/FrontWideTVRight";
 import BackWideTVLeft from "../mapAssets/tvs/BackWideTVLeft";
 import BackWideTVRight from "../mapAssets/tvs/BackWideTVRight";
 
+import ToiletFloor from "../mapAssets/ToiletFloor";
 import Sink from "../mapAssets/Sink";
 import Toilet from "../mapAssets/Toilet";
 
-import VerticalWall from "../mapAssets/walls/VerticalWall";
-import HorizontalWall from "../mapAssets/walls/HorizontalWall";
+import KitchenFloor from "../mapAssets/KitchenFloor";
+
+import RightWall from "../mapAssets/walls/RightWall";
+import LeftWall from "../mapAssets/walls/LeftWall";
+import TopWall from "../mapAssets/walls/TopWall";
+import BottomWall from "../mapAssets/walls/BottomWall";
 import LeftBottomWall from "../mapAssets/walls/LeftBottomWall";
 import LeftTopWall from "../mapAssets/walls/LeftTopWall";
 import RightBottomWall from "../mapAssets/walls/RightBottomWall";
@@ -38,32 +43,32 @@ import InteractionManager from "../../InteractionManager.ts/InteractionManager";
 import TypoMaster from "../typoMaster/TypoMaster";
 
 const floor = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
+  [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
+  [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
+  [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
+  [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
+  [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
+  [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [22, 22, 22, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [22, 22, 22, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [22, 22, 22, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
 const top = [
-  ["_", "_", "_", "_", "_", "_", "_", "_", 5, "_", "_", "_", "_", "_"],
-  [4, 4, 4, 4, 2, "_", "_", "_", 5, "_", "_", "_", "_", "_"],
-  [3, 3, 3, 3, 2, "_", "_", "_", 5, "_", "_", "_", "_", "_"],
+  ["_", "_", "_", "_", "_", "_", "_", "_", 23, "_", "_", "_", "_", "_"],
+  [4, 4, 4, 4, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
+  [3, 3, 3, 3, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
-  [4, 4, 4, 4, 2, "_", "_", "_", 5, "_", "_", "_", "_", "_"],
-  [3, 3, 3, 3, 2, "_", "_", "_", 7, 6, 6, "_", "_", 6, 6, 6],
+  [4, 4, 4, 4, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
+  [3, 3, 3, 3, 2, "_", "_", "_", 7, 24, 24, "_", "_", 24, 24, 24],
   ["_", "_", "_", "_", "_", 1, "_", "_", "_", 14, 15, "_", "_", "_"],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
   [4, 4, 4, 4, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_"],
@@ -88,25 +93,8 @@ const top = [
     17,
   ],
   [6, 6, 6, 10, "_", "_", "_", "_", "_", 13, "_", "_", "_", 8, 6, 6],
-  [
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    "_",
-    13,
-  ],
-  [12, "_", 11, 5, "_", "_", "_", "_", 20, 21, 2, "_", "_", 5],
+  ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", 13],
+  [12, "_", 11, 5, "_", "_", "_", "_", 20, 21, 2, "_", "_", 23],
 ];
 
 const map: WorldMapGrid = [floor, top];
@@ -133,11 +121,11 @@ const mapObjects: MappedStaticObjects = {
     layer: 1,
   },
   5: {
-    actor: VerticalWall as unknown as typeof Actor,
+    actor: RightWall as unknown as typeof Actor,
     layer: 1,
   },
   6: {
-    actor: HorizontalWall as unknown as typeof Actor,
+    actor: TopWall as unknown as typeof Actor,
     layer: 1,
   },
   7: {
@@ -198,6 +186,22 @@ const mapObjects: MappedStaticObjects = {
   },
   21: {
     actor: BackSofaRight as unknown as typeof Actor,
+    layer: 1,
+  },
+  22: {
+    actor: ToiletFloor as unknown as typeof Actor,
+    layer: 1,
+  },
+  23: {
+    actor: LeftWall as unknown as typeof Actor,
+    layer: 1,
+  },
+  24: {
+    actor: BottomWall as unknown as typeof Actor,
+    layer: 1,
+  },
+  25: {
+    actor: KitchenFloor as unknown as typeof Actor,
     layer: 1,
   },
 };
