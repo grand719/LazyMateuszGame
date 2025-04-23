@@ -1,10 +1,41 @@
 import CollisionManager from "../../CollisionManager/CollisionManager";
 import { Entity } from "../../CollisionManager/Entity";
+import { InteractionEntity } from "../../InteractionManager.ts/InteractionEntity";
+import InteractionManager from "../../InteractionManager.ts/InteractionManager";
 import AssetManager from "./AssetManager";
+import Log from "./Log";
 import Object from "./Object";
 import { Vector2d } from "./types";
 import type World from "./World";
 
+type ActorConstructor = {
+  src: string;
+  owningWorld: World;
+  startingPosition: Vector2d;
+  hasCollision?: boolean;
+  hasInteraction?: boolean;
+  interactionOffset?: Vector2d;
+  hasPlayerInteraction?: boolean;
+  speed?: number;
+  velocity?: Vector2d;
+  destructionOffset?: Vector2d;
+  offset?: Vector2d;
+  collisionOffset?: Vector2d;
+};
+
+const defaultActorConstructorParams = {
+  hasCollision: false,
+  hasInteraction: false,
+  hasPlayerInteraction: false,
+  interactionOffset: { x: 0, y: 0 },
+  speed: 0,
+  velocity: { x: 0, y: 0 },
+  destructionOffset: { x: 0, y: 0 },
+  offset: { x: 0, y: 0 },
+  collisionOffset: { x: 0, y: 0 },
+};
+
+const TAG = "Actor";
 class Actor extends Object {
   private texture?: HTMLImageElement;
   private position: Vector2d;
@@ -17,20 +48,32 @@ class Actor extends Object {
   private hasCollision = false;
   private collisionOffset: Vector2d;
 
+  private hasInteraction = false;
+  private hasPlayerInteraction = false;
+  private interactionOffset = { x: 0, y: 0 };
+  private interactionEntity?: InteractionEntity;
+
   public worldRef: World;
 
-  constructor(
-    src: string,
-    owingWorld: World,
-    startingPosition: Vector2d,
-    hasCollision: boolean = false,
-    speed = 0,
-    velocity: Vector2d = { x: 0, y: 0 },
-    destructionOffset: Vector2d = { x: 0, y: 0 },
-    offset: Vector2d = { x: 0, y: 0 },
-    collisionOffset: Vector2d = { x: 0, y: 0 }
-  ) {
+  constructor(paramsProps: ActorConstructor) {
     super();
+    const params = { ...defaultActorConstructorParams, ...paramsProps };
+
+    const {
+      src,
+      speed,
+      startingPosition,
+      owningWorld,
+      hasCollision,
+      hasInteraction,
+      hasPlayerInteraction,
+      interactionOffset,
+      velocity,
+      destructionOffset,
+      offset,
+      collisionOffset,
+    } = params;
+
     if (src) {
       AssetManager.getImage(src)
         .then((texture) => {
@@ -43,9 +86,17 @@ class Actor extends Object {
               y: this.texture ? this.texture.height : 0,
             });
           }
+
+          if (hasInteraction || hasPlayerInteraction) {
+            this.registerInteractionEntity(startingPosition, {
+              x: this.texture ? this.texture.width : 0,
+              y: this.texture ? this.texture.height : 0,
+            });
+          }
         });
     }
-    this.worldRef = owingWorld;
+
+    this.worldRef = owningWorld;
     this.velocity = velocity;
     this.position = startingPosition;
     this.speed = speed;
@@ -53,21 +104,39 @@ class Actor extends Object {
     this.destructionOffset = destructionOffset;
     this.hasCollision = hasCollision;
     this.collisionOffset = collisionOffset;
+    this.hasInteraction = hasInteraction;
+    this.hasPlayerInteraction = hasPlayerInteraction;
+    this.interactionOffset = interactionOffset;
   }
 
   setTexture(image?: HTMLImageElement) {
     if (image) {
       this.texture = image;
 
+      if (
+        (this.hasInteraction || this.hasPlayerInteraction) &&
+        !this.interactionEntity
+      ) {
+        this.registerInteractionEntity(this.position, {
+          x: this.texture ? this.texture.width : 0,
+          y: this.texture ? this.texture.height : 0,
+        });
+      } else if (
+        (this.hasInteraction || this.hasPlayerInteraction) &&
+        this.interactionEntity
+      ) {
+        this.interactionEntity.setSize({
+          x: this.texture ? this.texture.width : 0,
+          y: this.texture ? this.texture.height : 0,
+        });
+      }
+
       if (this.hasCollision && !this.entity) {
         this.registerEntity(this.position, {
           x: this.texture ? this.texture.width : 0,
           y: this.texture ? this.texture.height : 0,
         });
-        return;
-      }
-
-      if (this.hasCollision && this.entity) {
+      } else if (this.hasCollision && this.entity) {
         this.entity?.setSize({
           x: this.texture ? this.texture.width : 0,
           y: this.texture ? this.texture.height : 0,
@@ -98,6 +167,13 @@ class Actor extends Object {
     this.updatePosition(deltaTime);
     if (this.hasCollision && this.entity) {
       this.entity.setPosition(this.position);
+    }
+
+    if (
+      (this.hasInteraction || this.hasPlayerInteraction) &&
+      this.interactionEntity
+    ) {
+      this.interactionEntity.setPosition(this.position);
     }
     this.isOutOfBounds();
   }
@@ -149,6 +225,16 @@ class Actor extends Object {
     if (this.entity) {
       CollisionManager.unRegisterEntity(this.entity);
     }
+
+    if (this.interactionEntity) {
+      if (this.hasInteraction) {
+        InteractionManager.removeInteractionEntity(this.interactionEntity);
+      }
+
+      if (this.hasPlayerInteraction) {
+        InteractionManager.setPlayerEntity(undefined);
+      }
+    }
   }
 
   private registerEntity(position: Vector2d, size: Vector2d) {
@@ -164,6 +250,28 @@ class Actor extends Object {
 
     this.entity = new Entity(newPosition, newSize, this);
     CollisionManager.registerEntity(this.entity);
+  }
+
+  private registerInteractionEntity(position: Vector2d, size: Vector2d) {
+    const newPosition = {
+      x: position.x - this.collisionOffset.x,
+      y: position.y - this.collisionOffset.y,
+    };
+
+    const newSize = {
+      x: size.x - this.collisionOffset.x,
+      y: size.y - this.collisionOffset.y,
+    };
+
+    this.interactionEntity = new InteractionEntity(newPosition, newSize, this);
+
+    if (this.hasPlayerInteraction) {
+      InteractionManager.setPlayerEntity(this.interactionEntity);
+    }
+
+    if (this.hasInteraction) {
+      InteractionManager.addInteractionsEntities(this.interactionEntity);
+    }
   }
 
   private updatePosition(deltaTime: number) {
@@ -188,6 +296,10 @@ class Actor extends Object {
     ) {
       this.setPendingToDestroy();
     }
+  }
+
+  public onInteract() {
+    Log.info(TAG, "onInteract");
   }
 }
 

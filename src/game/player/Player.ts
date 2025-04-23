@@ -3,6 +3,7 @@ import Actor from "../../engine/framework/Actor";
 import AssetManager from "../../engine/framework/AssetManager";
 import { Vector2d } from "../../engine/framework/types";
 import type World from "../../engine/framework/World";
+import TypoMaster from "../typoMaster/TypoMaster";
 
 enum PlayerImages {
   PlayerBack = "/player/player_back.png",
@@ -21,15 +22,16 @@ class Player extends Actor {
   };
 
   constructor(owningWorld: World, startingPosition: Vector2d) {
-    super(
-      "",
+    super({
+      src: "",
       owningWorld,
       startingPosition,
-      true,
-      100,
-      { x: 0, y: 0 },
-      { x: 300, y: 300 }
-    );
+      hasCollision: true,
+      hasPlayerInteraction: true,
+      speed: 100,
+      velocity: { x: 0, y: 0 },
+      destructionOffset: { x: 300, y: 300 },
+    });
     AssetManager.getMultipleImages(Object.values(PlayerImages)).then(
       (images) => {
         this.playerImages = images;
@@ -43,6 +45,11 @@ class Player extends Actor {
   public tick(deltaTime: number): void {
     super.tick(deltaTime);
     this.checkIfStillColliding();
+    if (TypoMaster.getShouldBlockMovement()) {
+      this.moveInput = { x: 0, y: 0 };
+      this.pressedKeys.clear();
+      return;
+    }
     this.handleKeyPres();
   }
 
@@ -173,7 +180,6 @@ class Player extends Actor {
 
     if (!isColliding) {
       this.collidedObjectRects = undefined;
-      console.log("Collision ended");
     }
 
     return isColliding;
