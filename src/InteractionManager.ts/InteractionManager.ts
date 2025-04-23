@@ -1,4 +1,5 @@
 import AssetManager from "../engine/framework/AssetManager";
+import TypoMaster from "../game/typoMaster/TypoMaster";
 import { InteractionEntity } from "./InteractionEntity";
 
 class InteractionManager {
@@ -21,7 +22,11 @@ class InteractionManager {
   }
 
   private keyHandler = (key: KeyboardEvent) => {
-    if (key.key === "e" && this.currentInteractiveEntity) {
+    if (
+      key.key === "e" &&
+      this.currentInteractiveEntity &&
+      !TypoMaster.getShouldBlockMovement()
+    ) {
       this.currentInteractiveEntity.delegate.onInteract();
     }
   };

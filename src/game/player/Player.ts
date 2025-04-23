@@ -3,6 +3,7 @@ import Actor from "../../engine/framework/Actor";
 import AssetManager from "../../engine/framework/AssetManager";
 import { Vector2d } from "../../engine/framework/types";
 import type World from "../../engine/framework/World";
+import TypoMaster from "../typoMaster/TypoMaster";
 
 enum PlayerImages {
   PlayerBack = "/player/player_back.png",
@@ -44,6 +45,11 @@ class Player extends Actor {
   public tick(deltaTime: number): void {
     super.tick(deltaTime);
     this.checkIfStillColliding();
+    if (TypoMaster.getShouldBlockMovement()) {
+      this.moveInput = { x: 0, y: 0 };
+      this.pressedKeys.clear();
+      return;
+    }
     this.handleKeyPres();
   }
 

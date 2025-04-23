@@ -35,6 +35,7 @@ import Floor from "../mapAssets/Floor";
 import Plant from "../mapAssets/Plant";
 import Player from "../player/Player";
 import InteractionManager from "../../InteractionManager.ts/InteractionManager";
+import TypoMaster from "../typoMaster/TypoMaster";
 
 const floor = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -209,7 +210,6 @@ class MainApplication extends Application {
       x: 50,
       y: 50,
     });
-
     world.setWorldMap(worldMap);
     this.setCurrentWorld(world);
   }
@@ -217,12 +217,14 @@ class MainApplication extends Application {
   tickInternal(deltaTime: number): void {
     CollisionManager.tick(deltaTime);
     InteractionManager.tick(deltaTime);
+    TypoMaster.tick(deltaTime);
     super.tickInternal(deltaTime);
   }
 
   renderInternal(canvas2D: CanvasRenderingContext2D): void {
     super.renderInternal(canvas2D);
     InteractionManager.render(canvas2D);
+    TypoMaster.render(canvas2D);
   }
 
   render(canvas2D: CanvasRenderingContext2D): void {
