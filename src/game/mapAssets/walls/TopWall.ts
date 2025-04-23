@@ -4,15 +4,12 @@ import World from "../../../engine/framework/World";
 
 export default class TopWall extends Actor {
   constructor(owningWorld: World, startingPosition: Vector2d) {
-    super(
-      "/walls/top_wall.png",
+    super({
+      src: "/walls/top_wall.png",
       owningWorld,
       startingPosition,
-      true,
-      0,
-      { x: 0, y: 0 },
-      { x: 300, y: 300 },
-      { x: 0, y: 0 }
-    );
+      hasCollision: true,
+      destructionOffset: { x: 300, y: 300 },
+    });
   }
 }
