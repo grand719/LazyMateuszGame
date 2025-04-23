@@ -26,6 +26,8 @@ import Sink from "../mapAssets/Sink";
 import Toilet from "../mapAssets/Toilet";
 
 import KitchenFloor from "../mapAssets/KitchenFloor";
+import FridgeBottom from "../mapAssets/kitchen/FridgeBottom";
+import FridgeTop from "../mapAssets/kitchen/FridgeTop";
 
 import RightWall from "../mapAssets/walls/RightWall";
 import LeftWall from "../mapAssets/walls/LeftWall";
@@ -62,8 +64,8 @@ const floor = [
 ];
 
 const top = [
-  ["_", "_", "_", "_", "_", "_", "_", "_", 23, "_", "_", "_", "_", "_"],
-  [4, 4, 4, 4, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
+  ["_", "_", "_", "_", "_", "_", "_", "_", 23, "_", 26, "_", "_", "_"],
+  [4, 4, 4, 4, 2, "_", "_", "_", 23, "_", 27, "_", "_", "_"],
   [3, 3, 3, 3, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
@@ -202,6 +204,14 @@ const mapObjects: MappedStaticObjects = {
   },
   25: {
     actor: KitchenFloor as unknown as typeof Actor,
+    layer: 1,
+  },
+  26: {
+    actor: FridgeTop as unknown as typeof Actor,
+    layer: 1,
+  },
+  27: {
+    actor: FridgeBottom as unknown as typeof Actor,
     layer: 1,
   },
 };
