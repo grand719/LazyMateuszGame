@@ -8,7 +8,6 @@ export default class ToiletFloor extends Actor {
       src: "/toilette/toilet_floor.png",
       owningWorld,
       startingPosition,
-      hasCollision: true,
       destructionOffset: { x: 300, y: 300 },
     });
   }
