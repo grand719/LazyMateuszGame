@@ -43,6 +43,15 @@ import LeftTopWall from "../mapAssets/walls/LeftTopWall";
 import RightBottomWall from "../mapAssets/walls/RightBottomWall";
 import RightTopWall from "../mapAssets/walls/RightTopWall";
 
+import NpcOne from "../mapAssets/npcs/NpcOne";
+import NpcTwo from "../mapAssets/npcs/NpcTwo";
+import NpcThree from "../mapAssets/npcs/NpcThree";
+import NpcFour from "../mapAssets/npcs/NpcFour";
+import NpcFive from "../mapAssets/npcs/NpcFive";
+import NpcSix from "../mapAssets/npcs/NpcSix";
+import NpcSeven from "../mapAssets/npcs/NpcSeven";
+import NpcEight from "../mapAssets/npcs/NpcEight";
+
 import Chair from "../mapAssets/Chair";
 import Table from "../mapAssets/Table";
 import Floor from "../mapAssets/Floor";
@@ -71,18 +80,18 @@ const floor = [
 ];
 
 const top = [
-  ["_", "_", "_", "_", "_", "_", 14, 15, 23, 32, 26, 32, 32, 32, 32, 32],
+  [39, "_", 42, "_", "_", "_", 14, 15, 23, 32, 26, 32, 32, 32, 32, 32],
   [4, 4, 4, 4, 2, "_", "_", "_", 23, 32, 27, 31, 31, 32, 34, 34],
   [3, 3, 3, 3, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
-  ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", 28, "_", 28],
+  [35, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", 37, 28, 38, 28],
   [4, 4, 4, 4, 2, "_", "_", "_", 23, 28, "_", "_", "_", 28, "_", 28],
   [3, 3, 30, 3, 2, "_", "_", "_", 7, 24, 24, "_", "_", 24, 24, 24],
-  ["_", "_", "_", "_", "_", 1, "_", "_", "_", 14, 15, "_", "_", 13, "_", 13],
+  [40, "_", "_", "_", "_", 1, "_", "_", "_", 14, 15, "_", "_", 13, "_", 13],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
-  [4, 4, 4, 4, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", 28],
+  [4, 4, 4, 4, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_", 41, 28],
   [3, 3, 3, 3, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_", 18, 19],
-  ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+  ["_", "_", 36, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
   [
     20,
     21,
@@ -247,6 +256,38 @@ const mapObjects: MappedStaticObjects = {
   },
   34: {
     actor: Oven as unknown as typeof Actor,
+    layer: 1,
+  },
+  35: {
+    actor: NpcOne as unknown as typeof Actor,
+    layer: 1,
+  },
+  36: {
+    actor: NpcTwo as unknown as typeof Actor,
+    layer: 1,
+  },
+  37: {
+    actor: NpcThree as unknown as typeof Actor,
+    layer: 1,
+  },
+  38: {
+    actor: NpcFour as unknown as typeof Actor,
+    layer: 1,
+  },
+  39: {
+    actor: NpcFive as unknown as typeof Actor,
+    layer: 1,
+  },
+  40: {
+    actor: NpcSix as unknown as typeof Actor,
+    layer: 1,
+  },
+  41: {
+    actor: NpcSeven as unknown as typeof Actor,
+    layer: 1,
+  },
+  42: {
+    actor: NpcEight as unknown as typeof Actor,
     layer: 1,
   },
 };
