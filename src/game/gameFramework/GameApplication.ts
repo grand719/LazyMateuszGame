@@ -9,6 +9,7 @@ import {
 } from "../../engine/framework/WorldMap";
 import DeskBack from "../mapAssets/DeskBack";
 import DeskFront from "../mapAssets/DeskFront";
+import PlayerDesk from "../mapAssets/PlayerDesk";
 
 import FrontSofaLeft from "../mapAssets/sofas/FrontSofaLeft";
 import FrontSofaRight from "../mapAssets/sofas/FrontSofaRight";
@@ -16,6 +17,7 @@ import BackSofaLeft from "../mapAssets/sofas/BackSofaLeft";
 import BackSofaRight from "../mapAssets/sofas/BackSofaRight";
 
 import SmallTVFront from "../mapAssets/tvs/SmallTVFront";
+import SmallTVBack from "../mapAssets/tvs/SmallTVBack";
 import FrontWideTVLeft from "../mapAssets/tvs/FrontWideTVLeft";
 import FrontWideTVRight from "../mapAssets/tvs/FrontWideTVRight";
 import BackWideTVLeft from "../mapAssets/tvs/BackWideTVLeft";
@@ -26,6 +28,11 @@ import Sink from "../mapAssets/Sink";
 import Toilet from "../mapAssets/Toilet";
 
 import KitchenFloor from "../mapAssets/KitchenFloor";
+import FridgeBottom from "../mapAssets/kitchen/FridgeBottom";
+import FridgeTop from "../mapAssets/kitchen/FridgeTop";
+import KitchenSink from "../mapAssets/kitchen/KitchenSink";
+import KitchenCabinet from "../mapAssets/kitchen/KitchenCabinet";
+import Oven from "../mapAssets/kitchen/Oven";
 
 import RightWall from "../mapAssets/walls/RightWall";
 import LeftWall from "../mapAssets/walls/LeftWall";
@@ -36,6 +43,17 @@ import LeftTopWall from "../mapAssets/walls/LeftTopWall";
 import RightBottomWall from "../mapAssets/walls/RightBottomWall";
 import RightTopWall from "../mapAssets/walls/RightTopWall";
 
+import NpcOne from "../mapAssets/npcs/NpcOne";
+import NpcTwo from "../mapAssets/npcs/NpcTwo";
+import NpcThree from "../mapAssets/npcs/NpcThree";
+import NpcFour from "../mapAssets/npcs/NpcFour";
+import NpcFive from "../mapAssets/npcs/NpcFive";
+import NpcSix from "../mapAssets/npcs/NpcSix";
+import NpcSeven from "../mapAssets/npcs/NpcSeven";
+import NpcEight from "../mapAssets/npcs/NpcEight";
+
+import Chair from "../mapAssets/Chair";
+import Table from "../mapAssets/Table";
 import Floor from "../mapAssets/Floor";
 import Plant from "../mapAssets/Plant";
 import Player from "../player/Player";
@@ -62,23 +80,23 @@ const floor = [
 ];
 
 const top = [
-  ["_", "_", "_", "_", "_", "_", "_", "_", 23, "_", "_", "_", "_", "_"],
-  [4, 4, 4, 4, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
+  [39, "_", 42, "_", "_", "_", 14, 15, 23, 32, 26, 32, 32, 32, 32, 32],
+  [4, 4, 4, 4, 2, "_", "_", "_", 23, 32, 27, 31, 31, 32, 34, 34],
   [3, 3, 3, 3, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+  [35, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", 37, 28, 38, 28],
+  [4, 4, 4, 4, 2, "_", "_", "_", 23, 28, "_", "_", "_", 28, "_", 28],
+  [3, 3, 30, 3, 2, "_", "_", "_", 7, 24, 24, "_", "_", 24, 24, 24],
+  [40, "_", "_", "_", "_", 1, "_", "_", "_", 14, 15, "_", "_", 13, "_", 13],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
-  [4, 4, 4, 4, 2, "_", "_", "_", 23, "_", "_", "_", "_", "_"],
-  [3, 3, 3, 3, 2, "_", "_", "_", 7, 24, 24, "_", "_", 24, 24, 24],
-  ["_", "_", "_", "_", "_", 1, "_", "_", "_", 14, 15, "_", "_", "_"],
-  ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
-  [4, 4, 4, 4, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+  [4, 4, 4, 4, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_", 41, 28],
   [3, 3, 3, 3, 2, "_", "_", "_", "_", "_", "_", "_", "_", "_", 18, 19],
-  ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
+  ["_", "_", 36, "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"],
   [
+    20,
+    21,
     "_",
-    "_",
-    "_",
-    "_",
+    33,
     "_",
     "_",
     "_",
@@ -94,7 +112,7 @@ const top = [
   ],
   [6, 6, 6, 10, "_", "_", "_", "_", "_", 13, "_", "_", "_", 8, 6, 6],
   ["_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", 13],
-  [12, "_", 11, 5, "_", "_", "_", "_", 20, 21, 2, "_", "_", 23],
+  [12, "_", 11, 5, "_", "_", "_", 28, 20, 21, 2, "_", "_", 23, 29],
 ];
 
 const map: WorldMapGrid = [floor, top];
@@ -202,6 +220,74 @@ const mapObjects: MappedStaticObjects = {
   },
   25: {
     actor: KitchenFloor as unknown as typeof Actor,
+    layer: 1,
+  },
+  26: {
+    actor: FridgeTop as unknown as typeof Actor,
+    layer: 1,
+  },
+  27: {
+    actor: FridgeBottom as unknown as typeof Actor,
+    layer: 1,
+  },
+  28: {
+    actor: Table as unknown as typeof Actor,
+    layer: 1,
+  },
+  29: {
+    actor: Chair as unknown as typeof Actor,
+    layer: 1,
+  },
+  30: {
+    actor: PlayerDesk as unknown as typeof Actor,
+    layer: 1,
+  },
+  31: {
+    actor: KitchenSink as unknown as typeof Actor,
+    layer: 1,
+  },
+  32: {
+    actor: KitchenCabinet as unknown as typeof Actor,
+    layer: 1,
+  },
+  33: {
+    actor: SmallTVBack as unknown as typeof Actor,
+    layer: 1,
+  },
+  34: {
+    actor: Oven as unknown as typeof Actor,
+    layer: 1,
+  },
+  35: {
+    actor: NpcOne as unknown as typeof Actor,
+    layer: 1,
+  },
+  36: {
+    actor: NpcTwo as unknown as typeof Actor,
+    layer: 1,
+  },
+  37: {
+    actor: NpcThree as unknown as typeof Actor,
+    layer: 1,
+  },
+  38: {
+    actor: NpcFour as unknown as typeof Actor,
+    layer: 1,
+  },
+  39: {
+    actor: NpcFive as unknown as typeof Actor,
+    layer: 1,
+  },
+  40: {
+    actor: NpcSix as unknown as typeof Actor,
+    layer: 1,
+  },
+  41: {
+    actor: NpcSeven as unknown as typeof Actor,
+    layer: 1,
+  },
+  42: {
+    actor: NpcEight as unknown as typeof Actor,
     layer: 1,
   },
 };
