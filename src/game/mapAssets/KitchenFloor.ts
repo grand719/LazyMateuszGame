@@ -8,7 +8,6 @@ export default class KitchenFloor extends Actor {
       src: "/kitchen/kitchen_floor.png",
       owningWorld,
       startingPosition,
-      hasCollision: true,
       destructionOffset: { x: 300, y: 300 },
     });
   }
