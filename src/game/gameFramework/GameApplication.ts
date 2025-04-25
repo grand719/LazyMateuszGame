@@ -319,7 +319,7 @@ class MainApplication extends Application {
     TypoMaster.tick(deltaTime);
 
     // Update scores every tick
-    ScoreManager.updateScores();
+    ScoreManager.tick(deltaTime);
 
     super.tickInternal(deltaTime);
   }
