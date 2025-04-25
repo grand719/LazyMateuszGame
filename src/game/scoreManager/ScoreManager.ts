@@ -23,6 +23,15 @@ class ScoreManager {
         this.lastUpdateTime = currentTime; 
       }
     }
+
+    render(canvas2D: CanvasRenderingContext2D): void {
+        canvas2D.fillStyle = "#000";
+        canvas2D.font = "20px Arial";
+        canvas2D.fillText(`Main Score: ${this.getMainScore()}`, 10, 30);
+        canvas2D.fillText(`Working Score: ${this.getWorkingScore()}`, 10, 60);
+        canvas2D.fillText(`Slacking Off Score: ${this.getSlackingOffScore()}`, 10, 90);
+      }
+      
   
     getMainScore(): number {
       return this.mainScore;

@@ -330,21 +330,12 @@ class MainApplication extends Application {
     TypoMaster.render(canvas2D);
 
     // Render the scores
-    this.renderScores(canvas2D);
+    ScoreManager.render(canvas2D);
   }
 
   render(canvas2D: CanvasRenderingContext2D): void {
     canvas2D.fillStyle = "#fff";
     canvas2D.fillRect(0, 0, 500, 500);
-  }
-
-  // Function to render the scores on the canvas
-  renderScores(canvas2D: CanvasRenderingContext2D): void {
-    canvas2D.fillStyle = "#000";
-    canvas2D.font = "20px Arial";
-    canvas2D.fillText(`Main Score: ${ScoreManager.getMainScore()}`, 10, 30);
-    canvas2D.fillText(`Working Score: ${ScoreManager.getWorkingScore()}`, 10, 60);
-    canvas2D.fillText(`Slacking Off Score: ${ScoreManager.getSlackingOffScore()}`, 10, 90);
   }
 }
 
