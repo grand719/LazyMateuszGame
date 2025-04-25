@@ -35,8 +35,8 @@ class TypoMaster {
   public render(canvas2D: CanvasRenderingContext2D) {
     if (!this.isGameStarted) return;
 
-    const canvasWidth = canvas2D.canvas.width;
-    const canvasHeight = canvas2D.canvas.height;
+    const canvasWidth = 800;
+    const canvasHeight = 825;
     const windowWidth = 400;
     const windowHeight = 200;
     const windowX = (canvasWidth - windowWidth) / 2;
@@ -50,19 +50,15 @@ class TypoMaster {
 
     canvas2D.font = "20px Arial";
     canvas2D.fillStyle = "black";
-    canvas2D.fillText(
-      `Fraze: ${this.currentSentence}`,
-      windowX + 20,
-      windowY + 50
-    );
+    canvas2D.fillText(`Phrase: ${this.currentSentence}`, windowX, windowY + 50);
 
     canvas2D.fillStyle = "blue";
-    canvas2D.fillText(`Input: ${this.userInput}`, windowX + 20, windowY + 90);
+    canvas2D.fillText(`Input: ${this.userInput}`, windowX, windowY + 90);
 
     canvas2D.fillStyle = "red";
     canvas2D.fillText(
       `Time Left: ${this.timeLeft.toFixed(1)}s`,
-      windowX + 20,
+      windowX,
       windowY + 130
     );
 
