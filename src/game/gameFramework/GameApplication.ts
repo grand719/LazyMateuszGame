@@ -7,6 +7,9 @@ import {
   WorldMap,
   WorldMapGrid,
 } from "../../engine/framework/WorldMap";
+
+import ScoreManager from "../scoreManager/ScoreManager";
+
 import DeskBack from "../mapAssets/DeskBack";
 import DeskFront from "../mapAssets/DeskFront";
 import PlayerDesk from "../mapAssets/PlayerDesk";
@@ -314,6 +317,10 @@ class MainApplication extends Application {
     CollisionManager.tick(deltaTime);
     InteractionManager.tick(deltaTime);
     TypoMaster.tick(deltaTime);
+
+    // Update scores every tick
+    ScoreManager.updateScores();
+
     super.tickInternal(deltaTime);
   }
 
@@ -321,11 +328,23 @@ class MainApplication extends Application {
     super.renderInternal(canvas2D);
     InteractionManager.render(canvas2D);
     TypoMaster.render(canvas2D);
+
+    // Render the scores
+    this.renderScores(canvas2D);
   }
 
   render(canvas2D: CanvasRenderingContext2D): void {
     canvas2D.fillStyle = "#fff";
     canvas2D.fillRect(0, 0, 500, 500);
+  }
+
+  // Function to render the scores on the canvas
+  renderScores(canvas2D: CanvasRenderingContext2D): void {
+    canvas2D.fillStyle = "#000";
+    canvas2D.font = "20px Arial";
+    canvas2D.fillText(`Main Score: ${ScoreManager.getMainScore()}`, 10, 30);
+    canvas2D.fillText(`Working Score: ${ScoreManager.getWorkingScore()}`, 10, 60);
+    canvas2D.fillText(`Slacking Off Score: ${ScoreManager.getSlackingOffScore()}`, 10, 90);
   }
 }
 

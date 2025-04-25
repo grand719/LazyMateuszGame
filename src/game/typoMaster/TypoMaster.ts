@@ -66,11 +66,20 @@ class TypoMaster {
   }
 
   public startGame(sentences: string[]) {
-    this.sentences = sentences;
+    this.sentences = this.getRandomWords(sentences, 5);
     this.score = 0;
     this.isGameStarted = true;
     this.shouldBlockEventMovement = true;
     this.nextSentence();
+  }
+
+  private getRandomWords(sentences: string[], count: number): string[] {
+    const shuffled = [...sentences];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled.slice(0, count);
   }
 
   private nextSentence() {

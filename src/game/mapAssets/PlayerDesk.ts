@@ -4,6 +4,12 @@ import World from "../../engine/framework/World";
 import TypoMaster from "../typoMaster/TypoMaster";
 
 export default class PlayerDesk extends Actor {
+  private wordList: string[] = [
+    "bug", "jira", "commit", "sprint", "ticket",
+    "regression", "release", "merge", "workflow", "branch",
+    "automation", "screenshot", "deploy", "tester", "review"
+  ];
+
   constructor(owningWorld: World, startingPosition: Vector2d) {
     super({
       src: "/desks/player_desk.png",
@@ -16,6 +22,6 @@ export default class PlayerDesk extends Actor {
   }
 
   public onInteract(): void {
-    TypoMaster.startGame(["work work", "more work", "money please"]);
+    TypoMaster.startGame(this.wordList);
   }
 }
