@@ -7,7 +7,7 @@ import ScoreManager from "../scoreManager/ScoreManager";
 export default class Chair extends Actor {
   private wordList: string[] = [
     "slouch", "spin", "nap", "chitchat", "stretch",
-    "leanback", "procrastinate", "idle", "swivel", "zoneout",
+    "leanback", "sleep", "idle", "swivel", "zoneout",
     "coffee", "daydream", "fidget", "yawn", "gossip"
   ];
 

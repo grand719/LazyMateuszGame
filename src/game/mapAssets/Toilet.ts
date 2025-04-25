@@ -7,7 +7,7 @@ import ScoreManager from "../scoreManager/ScoreManager";
 export default class Toilet extends Actor {
   private wordList: string[] = [
     "tiktok", "reddit", "flush", "stall", "pause",
-    "scroll", "mirror", "selfie", "boredom", "escape",
+    "scroll", "mirror", "instagram", "boredom", "escape",
     "hideout", "doomscroll", "memes", "snapchat", "yawn"
   ];
 
