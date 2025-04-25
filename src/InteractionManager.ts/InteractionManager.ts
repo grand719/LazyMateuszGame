@@ -8,6 +8,7 @@ class InteractionManager {
   private entitiesToInteract = new Set<InteractionEntity>();
   private playerEntity?: InteractionEntity;
   private currentInteractiveEntity?: InteractionEntity;
+  private onInteraction?: ((entity: InteractionEntity) => void)[] = [];
 
   private pressEAsset?: HTMLImageElement;
 
@@ -28,6 +29,11 @@ class InteractionManager {
       !TypoMaster.getShouldBlockMovement()
     ) {
       this.currentInteractiveEntity.delegate.onInteract();
+      if (this.currentInteractiveEntity) {
+        this.onInteraction?.forEach((callback) => {
+          callback(this.currentInteractiveEntity!);
+        });
+      }
     }
   };
 
@@ -78,6 +84,12 @@ class InteractionManager {
       this.currentInteractiveEntity = undefined;
     }
   };
+
+  public addInteractionHandler(
+    callbackEntity: (entity: InteractionEntity) => void
+  ) {
+    this.onInteraction?.push(callbackEntity);
+  }
 
   public addInteractionsEntities(entity: InteractionEntity) {
     if (this.entitiesToInteract.has(entity)) {

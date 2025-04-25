@@ -5,7 +5,7 @@ import World from "./World";
 export type WorldMapGrid = any[][][];
 export type MappedStaticObjects = Record<
   any,
-  { actor: typeof Actor; layer: number }
+  { actor: typeof Actor; layer: number; restParams?: any[] }
 >;
 
 export class WorldMap {
@@ -35,10 +35,18 @@ export class WorldMap {
 
           const actor = this.mappedObjects[coll].actor;
           const layer = this.mappedObjects[coll].layer;
-          this.world.SpawnActor(layer, actor, this.world, {
-            x: indexColl * this.cellSize.x,
-            y: indexRow * this.cellSize.y,
-          });
+          const restParams = this.mappedObjects[coll].restParams ?? [];
+
+          this.world.SpawnActor(
+            layer,
+            actor,
+            this.world,
+            {
+              x: indexColl * this.cellSize.x,
+              y: indexRow * this.cellSize.y,
+            },
+            ...restParams
+          );
         });
       });
     });
