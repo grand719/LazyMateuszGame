@@ -5,9 +5,21 @@ import TypoMaster from "../typoMaster/TypoMaster";
 
 export default class Toilet extends Actor {
   private wordList: string[] = [
-    "tiktok", "reddit", "flush", "stall", "pause",
-    "scroll", "mirror", "selfie", "boredom", "escape",
-    "hideout", "doomscroll", "memes", "snapchat", "yawn"
+    "tiktok",
+    "reddit",
+    "flush",
+    "stall",
+    "pause",
+    "scroll",
+    "mirror",
+    "selfie",
+    "boredom",
+    "escape",
+    "hideout",
+    "doomscroll",
+    "memes",
+    "snapchat",
+    "yawn",
   ];
 
   constructor(owningWorld: World, startingPosition: Vector2d) {
@@ -22,6 +34,6 @@ export default class Toilet extends Actor {
   }
 
   public onInteract(): void {
-    TypoMaster.startGame(this.wordList);
+    TypoMaster.startGame(this.wordList, false);
   }
 }

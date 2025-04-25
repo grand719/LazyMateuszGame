@@ -15,6 +15,13 @@ class InteractionManager {
   private animationOffset = 0;
   private animationSpeed = 0.05;
 
+  clear() {
+    this.playerEntity = undefined;
+    this.currentInteractiveEntity = undefined;
+    this.entitiesToInteract.clear();
+    this.onInteraction = [];
+  }
+
   private constructor() {
     AssetManager.getImage("/pressE.png").then((image) => {
       this.pressEAsset = image;
