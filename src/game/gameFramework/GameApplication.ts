@@ -64,6 +64,12 @@ import InteractionManager from "../../InteractionManager.ts/InteractionManager";
 import TypoMaster from "../typoMaster/TypoMaster";
 import Boss from "../boss/Boss";
 
+enum GameState {
+  Started,
+  Ended,
+  StartMenu,
+}
+
 const floor = [
   [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
   [0, 0, 0, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 25, 25, 25],
@@ -302,23 +308,26 @@ const mapObjects: MappedStaticObjects = {
 };
 
 class MainApplication extends Application {
-  private isGameEnded = false;
   private totalPoints = 0;
+  private gameState = GameState.StartMenu;
 
   constructor() {
     super(800, 825, "TestApplication", "root");
-    this.startGame();
     ScoreManager.setGameEndCallback(this.onGameCallback);
 
     window.addEventListener("keydown", (event) => {
-      if (this.isGameEnded && event.key === "Enter") {
+      if (
+        (this.gameState === GameState.StartMenu ||
+          this.gameState === GameState.Ended) &&
+        event.key === "Enter"
+      ) {
         this.startGame();
       }
     });
   }
 
   tickInternal(deltaTime: number): void {
-    if (!this.isGameEnded) {
+    if (this.gameState === GameState.Started) {
       CollisionManager.tick(deltaTime);
       InteractionManager.tick(deltaTime);
       TypoMaster.tick(deltaTime);
@@ -328,12 +337,12 @@ class MainApplication extends Application {
   }
 
   renderInternal(canvas2D: CanvasRenderingContext2D): void {
-    if (!this.isGameEnded) {
+    if (this.gameState === GameState.Started) {
       super.renderInternal(canvas2D);
       InteractionManager.render(canvas2D);
       TypoMaster.render(canvas2D);
       ScoreManager.render(canvas2D);
-    } else {
+    } else if (this.gameState === GameState.Ended) {
       const canvasWidth = canvas2D.canvas.width;
       const canvasHeight = canvas2D.canvas.height;
       const popupWidth = 400;
@@ -367,6 +376,40 @@ class MainApplication extends Application {
         popupX + popupWidth / 2,
         popupY + 150
       );
+    } else if (this.gameState === GameState.StartMenu) {
+      const canvasWidth = canvas2D.canvas.width;
+      const canvasHeight = canvas2D.canvas.height;
+
+      canvas2D.fillStyle = "#000";
+      canvas2D.fillRect(0, 0, canvasWidth, canvasHeight);
+
+      canvas2D.fillStyle = "#fff";
+      canvas2D.font = "40px Arial";
+      canvas2D.textAlign = "center";
+      canvas2D.fillText(
+        "Procrastin Intern",
+        canvasWidth / 2,
+        canvasHeight / 2 - 50
+      );
+
+      canvas2D.font = "16px Arial";
+      canvas2D.fillText(
+        "Use WASD or Arrow Keys to move",
+        canvasWidth / 2,
+        canvasHeight / 2 + 20
+      );
+      canvas2D.fillText(
+        "Press E to interact with objects",
+        canvasWidth / 2,
+        canvasHeight / 2 + 40
+      );
+
+      canvas2D.font = "20px Arial";
+      canvas2D.fillText(
+        "Press Enter to start the game",
+        canvasWidth / 2,
+        canvasHeight / 2 + 90
+      );
     }
   }
 
@@ -377,7 +420,7 @@ class MainApplication extends Application {
 
   private onGameCallback = (totalPoints: number) => {
     this.totalPoints = totalPoints;
-    this.isGameEnded = true;
+    this.gameState = GameState.Ended;
     this.setCurrentWorld(undefined);
     ScoreManager.resetScores();
     TypoMaster.reset();
@@ -386,7 +429,7 @@ class MainApplication extends Application {
   };
 
   private startGame = () => {
-    this.isGameEnded = false;
+    this.gameState = GameState.Started;
     const world = new World(this);
     const worldMap = new WorldMap(world, map, mapObjects, {
       x: 50,
