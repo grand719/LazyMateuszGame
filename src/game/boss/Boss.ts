@@ -7,6 +7,7 @@ import { InteractionEntity } from "../../InteractionManager.ts/InteractionEntity
 import InteractionManager from "../../InteractionManager.ts/InteractionManager";
 import TypoMaster from "../typoMaster/TypoMaster";
 import ScoreManager from "../scoreManager/ScoreManager";
+import PlayerDesk from "../mapAssets/PlayerDesk";
 
 enum BossImages {
   BossBack = "/boss/Boss2.png",
@@ -168,6 +169,11 @@ export default class Boss extends Actor {
   }
 
   private onInteraction = (entity: InteractionEntity) => {
+    console.log(entity);
+    if (entity.delegate instanceof PlayerDesk) {
+      console.log("Interacted with PlayerDesk, skipping boss movement.");
+      return;
+    }
     if (this.path) {
       this.setVelocity({ x: 0, y: 0 });
       this.setPosition({

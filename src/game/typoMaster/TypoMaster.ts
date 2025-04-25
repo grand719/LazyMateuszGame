@@ -51,7 +51,7 @@ class TypoMaster {
     canvas2D.font = "20px Arial";
     canvas2D.fillStyle = "black";
     canvas2D.fillText(
-      `Fraze: ${this.currentSentence}`,
+      `Phrase: ${this.currentSentence}`,
       windowX + 20,
       windowY + 50
     );
