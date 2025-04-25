@@ -65,13 +65,15 @@ class TypoMaster {
     }
   }
 
-  public startGame(sentences: string[]) {
+  public startGame(sentences: string[], onFinishCallback?: (finalScore: number) => void) {
     this.sentences = this.getRandomWords(sentences, 5);
     this.score = 0;
     this.isGameStarted = true;
     this.shouldBlockEventMovement = true;
+    this.onFinishCallback = onFinishCallback; // 💡 ustawia callback
     this.nextSentence();
   }
+  
 
   private getRandomWords(sentences: string[], count: number): string[] {
     const shuffled = [...sentences];
@@ -117,8 +119,16 @@ class TypoMaster {
     return correctCount;
   }
 
+  private onFinishCallback?: (finalScore: number) => void;
+
+  public setOnFinishCallback(callback: (finalScore: number) => void) {
+  this.onFinishCallback = callback;
+}
+
+
   private endGame() {
     this.isGameStarted = false;
+    this.onFinishCallback?.(this.score);
     setTimeout(() => {
       this.shouldBlockEventMovement = false;
     }, 200);

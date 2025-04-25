@@ -42,6 +42,23 @@ class ScoreManager {
     getSlackingOffScore(): number {
       return this.slackingOffScore;
     }
+
+    increaseWorkingScore(amount: number) {
+        this.workingScore += amount;
+      }
+      
+    increaseSlackingOffScore(amount: number) {
+        this.slackingOffScore += amount;
+      }
+    
+    decreaseWorkingScore(amount: number) {
+        this.workingScore -= amount;
+      }
+      
+    decreaseSlackingOffScore(amount: number) {
+        this.slackingOffScore -= amount;
+      }
+      
   
     resetScores() {
       this.mainScore = 0;
