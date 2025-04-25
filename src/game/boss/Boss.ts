@@ -18,10 +18,8 @@ enum BossImages {
 export default class Boss extends Actor {
   private map: any[][];
   private blankSpaceSign: any;
-  private getPlayerPosition: () => Vector2d;
   private grid: pf.Grid;
   private finder: pf.AStar;
-  private startingPosition: Vector2d;
   private path: Vector2d[] | undefined;
   private bossImages?: Record<string, HTMLImageElement>;
 
@@ -45,9 +43,6 @@ export default class Boss extends Actor {
       this.setTexture(this.bossImages[BossImages.BossFront]);
     });
 
-    this.startingPosition = startingPosition;
-
-    this.getPlayerPosition = () => ({ x: 250, y: 350 });
     this.map = map;
     this.blankSpaceSign = blankSpaceSign;
 

@@ -41,7 +41,6 @@ class Actor extends Object {
   protected position: Vector2d;
   protected velocity: Vector2d;
   private destructionOffset: Vector2d;
-  private offset: Vector2d;
   private speed = 0;
   private rotation = 0;
   private entity?: Entity;
@@ -50,7 +49,6 @@ class Actor extends Object {
 
   private hasInteraction = false;
   private hasPlayerInteraction = false;
-  private interactionOffset = { x: 0, y: 0 };
   private interactionEntity?: InteractionEntity;
 
   public worldRef: World;
@@ -67,10 +65,8 @@ class Actor extends Object {
       hasCollision,
       hasInteraction,
       hasPlayerInteraction,
-      interactionOffset,
       velocity,
       destructionOffset,
-      offset,
       collisionOffset,
     } = params;
 
@@ -100,13 +96,11 @@ class Actor extends Object {
     this.velocity = velocity;
     this.position = startingPosition;
     this.speed = speed;
-    this.offset = offset;
     this.destructionOffset = destructionOffset;
     this.hasCollision = hasCollision;
     this.collisionOffset = collisionOffset;
     this.hasInteraction = hasInteraction;
     this.hasPlayerInteraction = hasPlayerInteraction;
-    this.interactionOffset = interactionOffset;
   }
 
   setTexture(image?: HTMLImageElement) {
