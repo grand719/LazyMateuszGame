@@ -50,15 +50,20 @@ class TypoMaster {
 
     canvas2D.font = "20px Arial";
     canvas2D.fillStyle = "black";
-    canvas2D.fillText(`Phrase: ${this.currentSentence}`, windowX, windowY + 50);
+    canvas2D.textAlign = "left";
+    canvas2D.fillText(
+      `Phrase: ${this.currentSentence}`,
+      windowX + 20,
+      windowY + 50
+    );
 
     canvas2D.fillStyle = "blue";
-    canvas2D.fillText(`Input: ${this.userInput}`, windowX, windowY + 90);
+    canvas2D.fillText(`Input: ${this.userInput}`, windowX + 20, windowY + 90);
 
     canvas2D.fillStyle = "red";
     canvas2D.fillText(
       `Time Left: ${this.timeLeft.toFixed(1)}s`,
-      windowX,
+      windowX + 20,
       windowY + 130
     );
 

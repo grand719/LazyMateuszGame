@@ -41,6 +41,7 @@ class ScoreManager {
   render(canvas2D: CanvasRenderingContext2D): void {
     canvas2D.fillStyle = "#000";
     canvas2D.font = "20px Arial";
+    canvas2D.textAlign = "left";
     canvas2D.fillText(`Main Score: ${this.getMainScore()}`, 5, 820);
     canvas2D.fillText(`Working Score: ${this.getWorkingScore()}`, 455, 820);
     canvas2D.fillText(
