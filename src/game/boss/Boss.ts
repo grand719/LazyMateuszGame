@@ -5,6 +5,8 @@ import World from "../../engine/framework/World";
 import * as pf from "@cetfox24/pathfinding-js";
 import { InteractionEntity } from "../../InteractionManager.ts/InteractionEntity";
 import InteractionManager from "../../InteractionManager.ts/InteractionManager";
+import TypoMaster from "../typoMaster/TypoMaster";
+import ScoreManager from "../scoreManager/ScoreManager";
 
 enum BossImages {
   BossBack = "/boss/Boss2.png",
@@ -96,6 +98,15 @@ export default class Boss extends Actor {
 
       this.path = undefined;
       this.currentTargetDestinationIndex = 0;
+
+      if (
+        TypoMaster.getIsWorkType() !== undefined &&
+        !TypoMaster.getIsWorkType() &&
+        TypoMaster.getIsGameStarted()
+      ) {
+        ScoreManager.subtractSlackingOffScore();
+      }
+
       return;
     }
 

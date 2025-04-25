@@ -84,7 +84,7 @@ class Application {
   getCurrentWorld() {
     return this.currentWorld;
   }
-  setCurrentWorld(world: World) {
+  setCurrentWorld(world?: World) {
     this.currentWorld = world;
   }
 

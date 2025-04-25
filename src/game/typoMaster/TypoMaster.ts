@@ -1,3 +1,5 @@
+import ScoreManager from "../scoreManager/ScoreManager";
+
 class TypoMaster {
   private static instance: TypoMaster;
   private shouldBlockEventMovement = false;
@@ -8,6 +10,19 @@ class TypoMaster {
   private timeLeft = 10;
   private score = 0;
   private timerId?: number;
+  private isWorkType?: boolean;
+
+  reset() {
+    this.shouldBlockEventMovement = false;
+    this.isGameStarted = false;
+    this.sentences = [];
+    this.currentSentence = "";
+    this.userInput = "";
+    this.timeLeft = 10;
+    this.score = 0;
+    this.timerId = undefined;
+    this.isWorkType = undefined;
+  }
 
   private constructor() {
     window.addEventListener("keydown", this.onKeyPress);
@@ -65,12 +80,17 @@ class TypoMaster {
     }
   }
 
-  public startGame(sentences: string[]) {
+  public startGame(sentences: string[], isWorkType?: boolean) {
     this.sentences = this.getRandomWords(sentences, 5);
     this.score = 0;
     this.isGameStarted = true;
     this.shouldBlockEventMovement = true;
+    this.isWorkType = isWorkType;
     this.nextSentence();
+  }
+
+  public getIsGameStarted() {
+    return this.isGameStarted;
   }
 
   private getRandomWords(sentences: string[], count: number): string[] {
@@ -123,7 +143,16 @@ class TypoMaster {
       this.shouldBlockEventMovement = false;
     }, 200);
     clearInterval(this.timerId);
-    console.log("final score: ", this.score);
+
+    if (this.score > 0) {
+      ScoreManager.addMainScore();
+      if (this.isWorkType === undefined) return;
+      if (this.isWorkType) {
+        ScoreManager.addWorkingScore();
+      } else {
+        ScoreManager.addSlackingOffScore();
+      }
+    }
   }
 
   private onKeyPress = (event: KeyboardEvent) => {
@@ -144,6 +173,10 @@ class TypoMaster {
       }
     }
   };
+
+  public getIsWorkType() {
+    return this.isWorkType;
+  }
 
   public static getInstance() {
     if (this.instance) {

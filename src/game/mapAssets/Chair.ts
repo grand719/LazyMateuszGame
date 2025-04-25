@@ -5,9 +5,21 @@ import TypoMaster from "../typoMaster/TypoMaster";
 
 export default class Chair extends Actor {
   private wordList: string[] = [
-    "slouch", "spin", "nap", "chitchat", "stretch",
-    "leanback", "procrastinate", "idle", "swivel", "zoneout",
-    "coffee", "daydream", "fidget", "yawn", "gossip"
+    "slouch",
+    "spin",
+    "nap",
+    "chitchat",
+    "stretch",
+    "leanback",
+    "procrastinate",
+    "idle",
+    "swivel",
+    "zoneout",
+    "coffee",
+    "daydream",
+    "fidget",
+    "yawn",
+    "gossip",
   ];
 
   constructor(owningWorld: World, startingPosition: Vector2d) {
@@ -22,6 +34,6 @@ export default class Chair extends Actor {
   }
 
   public onInteract(): void {
-    TypoMaster.startGame(this.wordList);
+    TypoMaster.startGame(this.wordList, true);
   }
 }

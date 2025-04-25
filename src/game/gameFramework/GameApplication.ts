@@ -302,8 +302,91 @@ const mapObjects: MappedStaticObjects = {
 };
 
 class MainApplication extends Application {
+  private isGameEnded = false;
+  private totalPoints = 0;
+
   constructor() {
-    super(800, 800, "TestApplication", "root");
+    super(800, 825, "TestApplication", "root");
+    this.startGame();
+    ScoreManager.setGameEndCallback(this.onGameCallback);
+
+    window.addEventListener("keydown", (event) => {
+      if (this.isGameEnded && event.key === "Enter") {
+        this.startGame();
+      }
+    });
+  }
+
+  tickInternal(deltaTime: number): void {
+    if (!this.isGameEnded) {
+      CollisionManager.tick(deltaTime);
+      InteractionManager.tick(deltaTime);
+      TypoMaster.tick(deltaTime);
+      ScoreManager.tick(deltaTime);
+      super.tickInternal(deltaTime);
+    }
+  }
+
+  renderInternal(canvas2D: CanvasRenderingContext2D): void {
+    if (!this.isGameEnded) {
+      super.renderInternal(canvas2D);
+      InteractionManager.render(canvas2D);
+      TypoMaster.render(canvas2D);
+      ScoreManager.render(canvas2D);
+    } else {
+      const canvasWidth = canvas2D.canvas.width;
+      const canvasHeight = canvas2D.canvas.height;
+      const popupWidth = 400;
+      const popupHeight = 200;
+      const popupX = (canvasWidth - popupWidth) / 2;
+      const popupY = (canvasHeight - popupHeight) / 2;
+
+      canvas2D.fillStyle = "#000";
+      canvas2D.globalAlpha = 0.8;
+      canvas2D.fillRect(popupX, popupY, popupWidth, popupHeight);
+
+      canvas2D.globalAlpha = 1.0;
+      canvas2D.strokeStyle = "#fff";
+      canvas2D.lineWidth = 2;
+      canvas2D.strokeRect(popupX, popupY, popupWidth, popupHeight);
+
+      canvas2D.fillStyle = "#fff";
+      canvas2D.font = "20px Arial";
+      canvas2D.textAlign = "center";
+
+      canvas2D.fillText("Game Over", popupX + popupWidth / 2, popupY + 50);
+
+      canvas2D.fillText(
+        `Your Score: ${this.totalPoints}`,
+        popupX + popupWidth / 2,
+        popupY + 100
+      );
+
+      canvas2D.fillText(
+        "Press Enter to play again",
+        popupX + popupWidth / 2,
+        popupY + 150
+      );
+    }
+  }
+
+  render(canvas2D: CanvasRenderingContext2D): void {
+    canvas2D.fillStyle = "#fff";
+    canvas2D.fillRect(0, 0, 500, 500);
+  }
+
+  private onGameCallback = (totalPoints: number) => {
+    this.totalPoints = totalPoints;
+    this.isGameEnded = true;
+    this.setCurrentWorld(undefined);
+    ScoreManager.resetScores();
+    TypoMaster.reset();
+    InteractionManager.clear();
+    CollisionManager.clearEntities();
+  };
+
+  private startGame = () => {
+    this.isGameEnded = false;
     const world = new World(this);
     const worldMap = new WorldMap(world, map, mapObjects, {
       x: 50,
@@ -311,32 +394,7 @@ class MainApplication extends Application {
     });
     world.setWorldMap(worldMap);
     this.setCurrentWorld(world);
-  }
-
-  tickInternal(deltaTime: number): void {
-    CollisionManager.tick(deltaTime);
-    InteractionManager.tick(deltaTime);
-    TypoMaster.tick(deltaTime);
-
-    // Update scores every tick
-    ScoreManager.tick(deltaTime);
-
-    super.tickInternal(deltaTime);
-  }
-
-  renderInternal(canvas2D: CanvasRenderingContext2D): void {
-    super.renderInternal(canvas2D);
-    InteractionManager.render(canvas2D);
-    TypoMaster.render(canvas2D);
-
-    // Render the scores
-    ScoreManager.render(canvas2D);
-  }
-
-  render(canvas2D: CanvasRenderingContext2D): void {
-    canvas2D.fillStyle = "#fff";
-    canvas2D.fillRect(0, 0, 500, 500);
-  }
+  };
 }
 
 export function GetApplication() {
