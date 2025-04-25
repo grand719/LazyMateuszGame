@@ -38,8 +38,8 @@ const defaultActorConstructorParams = {
 const TAG = "Actor";
 class Actor extends Object {
   private texture?: HTMLImageElement;
-  private position: Vector2d;
-  private velocity: Vector2d;
+  protected position: Vector2d;
+  protected velocity: Vector2d;
   private destructionOffset: Vector2d;
   private offset: Vector2d;
   private speed = 0;
@@ -178,6 +178,10 @@ class Actor extends Object {
     this.isOutOfBounds();
   }
 
+  getVelocity() {
+    return this.velocity;
+  }
+
   setVelocity(velocity: Vector2d) {
     const { x, y } = velocity;
     const magnitude = Math.sqrt(x ** 2 + y ** 2);
@@ -274,7 +278,7 @@ class Actor extends Object {
     }
   }
 
-  private updatePosition(deltaTime: number) {
+  protected updatePosition(deltaTime: number) {
     const { x, y } = this.velocity;
 
     this.position.x += x * deltaTime;

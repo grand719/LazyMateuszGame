@@ -47,6 +47,7 @@ class Player extends Actor {
     this.checkIfStillColliding();
     if (TypoMaster.getShouldBlockMovement()) {
       this.moveInput = { x: 0, y: 0 };
+      this.velocity = { x: 0, y: 0 };
       this.pressedKeys.clear();
       return;
     }
