@@ -29,7 +29,7 @@ class ScoreManager {
       const ticks = Math.floor(this.timeAccumulator);
       this.mainScore += ticks;
       this.workingScore -= ticks;
-      this.slackingOffScore -= 10 * ticks;
+      this.slackingOffScore -= 2 * ticks;
       this.timeAccumulator -= ticks;
     }
 
