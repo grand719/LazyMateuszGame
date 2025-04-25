@@ -7,6 +7,9 @@ import {
   WorldMap,
   WorldMapGrid,
 } from "../../engine/framework/WorldMap";
+
+import ScoreManager from "../scoreManager/ScoreManager";
+
 import DeskBack from "../mapAssets/DeskBack";
 import DeskFront from "../mapAssets/DeskFront";
 import PlayerDesk from "../mapAssets/PlayerDesk";
@@ -314,6 +317,10 @@ class MainApplication extends Application {
     CollisionManager.tick(deltaTime);
     InteractionManager.tick(deltaTime);
     TypoMaster.tick(deltaTime);
+
+    // Update scores every tick
+    ScoreManager.tick(deltaTime);
+
     super.tickInternal(deltaTime);
   }
 
@@ -321,6 +328,9 @@ class MainApplication extends Application {
     super.renderInternal(canvas2D);
     InteractionManager.render(canvas2D);
     TypoMaster.render(canvas2D);
+
+    // Render the scores
+    ScoreManager.render(canvas2D);
   }
 
   render(canvas2D: CanvasRenderingContext2D): void {
